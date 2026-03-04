@@ -1,0 +1,1507 @@
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+    /* ═══════════════════════════════════════════════
+   BRAND TOKENS — Dr. Shumard teal palette
+   ═══════════════════════════════════════════════ */
+    :root {
+        --brand-50: #f0f7fa;
+        --brand-100: #d9eaf1;
+        --brand-200: #b8d7e4;
+        --brand-300: #8ebfd2;
+        --brand-400: #70a5ba;
+        --brand-500: #5a8fa5;
+        --brand-600: #4a7a8f;
+        --brand-700: #3f6575;
+        --brand-800: #365462;
+        --brand-900: #2f4653;
+    }
+
+    /* ═══════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════ */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0
+    }
+
+    .ss-widget {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        width: 100%;
+        max-width: 900px;
+        min-height: 1100px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1.5rem 0;
+        -webkit-font-smoothing: antialiased
+    }
+
+    @media(min-width:640px) {
+        .ss-widget {
+            min-height: 1100px
+        }
+    }
+
+    /* ═══════════════════════════════════════════════
+   CARD
+   ═══════════════════════════════════════════════ */
+    .ss-card {
+        width: 100%;
+        max-width: 40rem;
+        background: #fff;
+        overflow: visible
+    }
+
+    .ss-body {
+        padding: 1.5rem
+    }
+
+    @media(min-width:640px) {
+        .ss-body {
+            padding: 2rem 2.5rem
+        }
+    }
+
+    /* ═══════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════ */
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0
+        }
+
+        100% {
+            background-position: 200% 0
+        }
+    }
+
+    @keyframes ss-fade {
+        0% {
+            opacity: 0;
+            transform: translateY(16px)
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0)
+        }
+    }
+
+    @keyframes pulse-ring {
+        0% {
+            transform: scale(.9);
+            opacity: .7
+        }
+
+        50% {
+            transform: scale(1);
+            opacity: 1
+        }
+
+        100% {
+            transform: scale(.9);
+            opacity: .7
+        }
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg)
+        }
+    }
+
+    .ss-shimmer {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s ease-in-out infinite
+    }
+
+    .ss-fade-in {
+        animation: ss-fade .5s ease-out forwards
+    }
+
+    .ss-pulse {
+        animation: pulse-ring 2s ease-in-out infinite
+    }
+
+    .ss-spin {
+        animation: spin 1s linear infinite
+    }
+
+    .ss-hidden {
+        display: none !important
+    }
+
+    /* ═══════════════════════════════════════════════
+   LOADING SKELETON
+   ═══════════════════════════════════════════════ */
+    .ss-skel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem
+    }
+
+    .ss-skel-bar {
+        border-radius: .375rem
+    }
+
+    .ss-skel-title {
+        height: 1.75rem;
+        width: 75%;
+        margin: 0 auto
+    }
+
+    .ss-skel-sub {
+        height: 1rem;
+        width: 50%;
+        margin: 0 auto
+    }
+
+    .ss-skel-row {
+        display: flex;
+        justify-content: center;
+        gap: .5rem;
+        margin-top: 1rem
+    }
+
+    .ss-skel-tile {
+        height: 5rem;
+        flex: 1;
+        max-width: 6rem;
+        border-radius: .75rem
+    }
+
+    .ss-skel-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem
+    }
+
+    .ss-skel-field {
+        height: 3rem;
+        border-radius: .75rem
+    }
+
+    /* ═══════════════════════════════════════════════
+   ERROR STATE
+   ═══════════════════════════════════════════════ */
+    .ss-err-wrap {
+        text-align: center
+    }
+
+    .ss-err-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        background: #fef2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.25rem
+    }
+
+    .ss-err-icon svg {
+        width: 2rem;
+        height: 2rem;
+        color: #ef4444
+    }
+
+    .ss-err-msg {
+        color: #374151;
+        font-size: .875rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem
+    }
+
+    .ss-err-msg a {
+        color: var(--brand-600);
+        text-decoration: underline
+    }
+
+    .ss-retry {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .625rem 1.5rem;
+        border-radius: .75rem;
+        font-size: .875rem;
+        font-weight: 600;
+        color: var(--brand-700);
+        background: var(--brand-50);
+        border: 1px solid var(--brand-200);
+        cursor: pointer;
+        transition: background .2s
+    }
+
+    .ss-retry:hover {
+        background: var(--brand-100)
+    }
+
+    .ss-retry svg {
+        width: 1rem;
+        height: 1rem
+    }
+
+    /* ═══════════════════════════════════════════════
+   FORM HEADER
+   ═══════════════════════════════════════════════ */
+    .ss-hdr {
+        text-align: center;
+        margin-bottom: 1.5rem
+    }
+
+    .ss-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        line-height: 1.4;
+        margin-bottom: .5rem
+    }
+
+    .ss-subtitle {
+        font-size: .875rem;
+        color: #6b7280;
+        line-height: 1.5
+    }
+
+    /* ═══════════════════════════════════════════════
+   COUNTDOWN
+   ═══════════════════════════════════════════════ */
+    .ss-cd {
+        margin-bottom: 1.5rem
+    }
+
+    .ss-cd-tiles {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: .4rem
+    }
+
+    @media(min-width:640px) {
+        .ss-cd-tiles {
+            gap: 1rem
+        }
+    }
+
+    .ss-cd-unit {
+        text-align: center;
+        flex: 1;
+        max-width: 110px
+    }
+
+    .ss-cd-tile {
+        width: 100%;
+        aspect-ratio: 11/12;
+        background: linear-gradient(to bottom, #111827, #1f2937);
+        border-radius: .75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, .15);
+        border: 1px solid rgba(55, 65, 81, .4)
+    }
+
+    .ss-cd-tile span {
+        font-size: clamp(1.25rem, 5vw, 3.5rem);
+        font-weight: 800;
+        color: #fff;
+        font-variant-numeric: tabular-nums
+    }
+
+    .ss-cd-lbl {
+        display: block;
+        font-size: clamp(8px, 2vw, 12px);
+        font-weight: 700;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        margin-top: .375rem
+    }
+
+    .ss-cd-sep {
+        display: flex;
+        flex-direction: column;
+        gap: .375rem;
+        align-self: center;
+        flex-shrink: 0;
+        padding-bottom: 1.25rem
+    }
+
+    .ss-cd-sep-dot {
+        width: clamp(4px, 1vw, 7px);
+        height: clamp(4px, 1vw, 7px);
+        border-radius: 50%;
+        background: var(--brand-500)
+    }
+
+    .ss-cd-div {
+        margin-top: 1.5rem;
+        border-top: 1px solid #f3f4f6
+    }
+
+    /* ═══════════════════════════════════════════════
+   LIVE BANNER
+   ═══════════════════════════════════════════════ */
+    .ss-live {
+        margin-bottom: 1.5rem;
+        text-align: center
+    }
+
+    .ss-live-box {
+        background: var(--brand-50);
+        border: 1px solid var(--brand-200);
+        border-radius: .75rem;
+        padding: 1rem
+    }
+
+    .ss-live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: .375rem;
+        padding: .25rem .75rem;
+        border-radius: 9999px;
+        background: #fee2e2;
+        color: #b91c1c;
+        font-size: .6875rem;
+        font-weight: 600;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+        margin-bottom: .5rem
+    }
+
+    .ss-live-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #ef4444
+    }
+
+    .ss-live-text {
+        font-size: .875rem;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: .5rem
+    }
+
+    .ss-live-link {
+        display: inline-flex;
+        align-items: center;
+        gap: .375rem;
+        font-size: .875rem;
+        font-weight: 600;
+        color: var(--brand-700);
+        text-decoration: none;
+        transition: color .2s
+    }
+
+    .ss-live-link:hover {
+        color: var(--brand-800)
+    }
+
+    .ss-live-link svg {
+        width: 1rem;
+        height: 1rem
+    }
+
+    /* ═══════════════════════════════════════════════
+   FORM
+   ═══════════════════════════════════════════════ */
+    .ss-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem
+    }
+
+    .ss-label {
+        display: block;
+        font-size: .6875rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        margin-bottom: .375rem
+    }
+
+    .ss-label-hint {
+        color: #d1d5db;
+        font-weight: 400;
+        text-transform: none
+    }
+
+    .ss-input,
+    .ss-select {
+        width: 100%;
+        height: 3.25rem;
+        padding: 0 1rem;
+        border-radius: .75rem;
+        border: 1px solid #e5e7eb;
+        background: rgba(249, 250, 251, .5);
+        color: #111827;
+        font-size: .875rem;
+        font-family: inherit;
+        transition: all .2s;
+        outline: none
+    }
+
+    .ss-input::placeholder {
+        color: #9ca3af
+    }
+
+    .ss-input:focus,
+    .ss-select:focus {
+        border-color: var(--brand-500);
+        box-shadow: 0 0 0 3px rgba(68, 171, 159, .2)
+    }
+
+    .ss-sel-wrap {
+        position: relative
+    }
+
+    .ss-select {
+        appearance: none;
+        padding-right: 2.5rem
+    }
+
+    .ss-sel-chev {
+        position: absolute;
+        right: .75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #9ca3af;
+        pointer-events: none
+    }
+
+    .ss-field-error {
+        display: block;
+        font-size: .75rem;
+        color: #ef4444;
+        margin-top: .25rem
+    }
+
+    .ss-phone-row {
+        display: flex;
+        gap: .5rem
+    }
+
+    .ss-phone-code-wrap {
+        flex-shrink: 0;
+        width: 5.5rem
+    }
+
+    .ss-phone-code {
+        padding: 0 .5rem;
+        font-size: .8125rem;
+        text-align: center
+    }
+
+    .ss-phone-input {
+        flex: 1;
+        min-width: 0
+    }
+
+    .ss-sms-hint {
+        font-size: .75rem;
+        color: #9ca3af;
+        margin-top: .375rem
+    }
+
+    .ss-cb-row {
+        display: flex;
+        align-items: flex-start;
+        gap: .75rem;
+        cursor: pointer
+    }
+
+    .ss-cb-row:hover .ss-cb-label {
+        color: #374151
+    }
+
+    .ss-cb {
+        margin-top: 2px;
+        width: 1rem;
+        height: 1rem;
+        border-radius: .25rem;
+        border: 1px solid #d1d5db;
+        accent-color: var(--brand-600);
+        flex-shrink: 0
+    }
+
+    .ss-cb-label {
+        font-size: .75rem;
+        color: #6b7280;
+        line-height: 1.6;
+        transition: color .2s
+    }
+
+    /* ═══════════════════════════════════════════════
+   SUBMIT
+   ═══════════════════════════════════════════════ */
+    .ss-submit {
+        width: 100%;
+        height: 3.25rem;
+        margin-top: .5rem;
+        border-radius: .75rem;
+        border: none;
+        font-size: .875rem;
+        font-weight: 600;
+        font-family: inherit;
+        color: #fff;
+        cursor: pointer;
+        background: linear-gradient(to right, var(--brand-600), var(--brand-700));
+        box-shadow: 0 10px 15px rgba(53, 141, 131, .25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        transition: all .2s
+    }
+
+    .ss-submit:hover {
+        background: linear-gradient(to right, var(--brand-700), var(--brand-800));
+        box-shadow: 0 10px 15px rgba(45, 115, 107, .3)
+    }
+
+    .ss-submit:active {
+        transform: scale(.98)
+    }
+
+    .ss-submit:disabled {
+        opacity: .5;
+        cursor: not-allowed
+    }
+
+    .ss-submit svg {
+        width: 1rem;
+        height: 1rem
+    }
+
+    /* ═══════════════════════════════════════════════
+   MESSAGE
+   ═══════════════════════════════════════════════ */
+    .ss-msg {
+        text-align: center;
+        font-size: .875rem;
+        padding: .625rem 1rem;
+        border-radius: .75rem;
+        margin-top: .75rem
+    }
+
+    .ss-msg--err {
+        background: #fef2f2;
+        color: #dc2626
+    }
+
+    .ss-msg--ok {
+        background: #f0fdf4;
+        color: #16a34a
+    }
+
+    /* ═══════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════ */
+    .ss-footer {
+        text-align: center;
+        font-size: .6875rem;
+        color: #9ca3af;
+        margin-top: 1.5rem
+    }
+
+    .ss-footer svg {
+        display: inline;
+        width: .875rem;
+        height: .875rem;
+        vertical-align: -2px;
+        margin-right: 2px
+    }
+
+    .ss-urgency {
+        text-align: center;
+        font-size: .875rem;
+        font-weight: 700;
+        color: #111827;
+        margin-top: .75rem
+    }
+
+    /* ═══════════════════════════════════════════════
+   SUCCESS
+   ═══════════════════════════════════════════════ */
+    .ss-ok-wrap {
+        text-align: center;
+        padding: 1rem 0
+    }
+
+    .ss-ok-icon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        background: #f0fdf4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.25rem
+    }
+
+    .ss-ok-icon svg {
+        width: 2rem;
+        height: 2rem;
+        color: #22c55e
+    }
+
+    .ss-ok-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: .5rem
+    }
+
+    .ss-ok-sub {
+        font-size: .875rem;
+        color: #6b7280;
+        margin-bottom: .25rem
+    }
+
+    .ss-ok-time {
+        display: inline-block;
+        font-size: .875rem;
+        font-weight: 600;
+        color: var(--brand-700);
+        background: var(--brand-50);
+        padding: .375rem 1rem;
+        border-radius: 9999px;
+        margin-top: .75rem
+    }
+</style>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- REGISTRATION + COUNTDOWN WIDGET                 -->
+<!-- ════════════════════════════════════════════════ -->
+<div id="ss-registration-form" class="ss-widget">
+    <div class="ss-card">
+        <div class="ss-body">
+
+            <!-- LOADING -->
+            <div id="ss-loader" class="ss-skel">
+                <div class="ss-shimmer ss-skel-bar ss-skel-title"></div>
+                <div class="ss-shimmer ss-skel-bar ss-skel-sub"></div>
+                <div class="ss-skel-row">
+                    <div class="ss-shimmer ss-skel-tile"></div>
+                    <div class="ss-shimmer ss-skel-tile"></div>
+                    <div class="ss-shimmer ss-skel-tile"></div>
+                    <div class="ss-shimmer ss-skel-tile"></div>
+                </div>
+                <div class="ss-skel-fields">
+                    <div class="ss-shimmer ss-skel-field"></div>
+                    <div class="ss-shimmer ss-skel-field"></div>
+                    <div class="ss-shimmer ss-skel-field"></div>
+                    <div class="ss-shimmer ss-skel-field"></div>
+                </div>
+            </div>
+
+            <!-- ERROR -->
+            <div id="ss-load-error" style="display:none" class="ss-err-wrap">
+                <div class="ss-err-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z" />
+                    </svg>
+                </div>
+                <p id="ss-load-error-msg" class="ss-err-msg" role="alert"></p>
+                <button type="button" id="ss-retry-btn" class="ss-retry">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Try Again
+                </button>
+            </div>
+
+            <!-- FORM -->
+            <div id="ss-form-wrap" style="display:none">
+
+                <!-- "Time until next workshop.." + Countdown -->
+                <div id="cd-countdown" style="display:none" class="ss-cd">
+                    <div class="ss-cd-tiles">
+                        <div class="ss-cd-unit">
+                            <div class="ss-cd-tile"><span id="cd-days">00</span></div><span
+                                class="ss-cd-lbl">Days</span>
+                        </div>
+                        <div class="ss-cd-sep">
+                            <div class="ss-cd-sep-dot"></div>
+                            <div class="ss-cd-sep-dot"></div>
+                        </div>
+                        <div class="ss-cd-unit">
+                            <div class="ss-cd-tile"><span id="cd-hours">00</span></div><span
+                                class="ss-cd-lbl">Hours</span>
+                        </div>
+                        <div class="ss-cd-sep">
+                            <div class="ss-cd-sep-dot"></div>
+                            <div class="ss-cd-sep-dot"></div>
+                        </div>
+                        <div class="ss-cd-unit">
+                            <div class="ss-cd-tile"><span id="cd-mins">00</span></div><span
+                                class="ss-cd-lbl">Minutes</span>
+                        </div>
+                        <div class="ss-cd-sep">
+                            <div class="ss-cd-sep-dot"></div>
+                            <div class="ss-cd-sep-dot"></div>
+                        </div>
+                        <div class="ss-cd-unit">
+                            <div class="ss-cd-tile"><span id="cd-secs">00</span></div><span
+                                class="ss-cd-lbl">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="ss-cd-div"></div>
+                </div>
+
+                <!-- Live Banner -->
+                <div id="cd-live-banner" style="display:none" class="ss-live">
+                    <div class="ss-live-box">
+                        <div class="ss-live-badge"><span class="ss-live-badge-dot ss-pulse"></span> Live Now</div>
+                        <p class="ss-live-text">The webinar has started!</p>
+                        <a id="cd-join-link" href="#" rel="noopener" class="ss-live-link">
+                            Join Now <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="ss-cd-div"></div>
+                </div>
+
+                <!-- Header — below countdown, above form -->
+                <div class="ss-hdr">
+                    <h2 class="ss-title">Reserve Your Spot Now</h2>
+                    <p class="ss-subtitle">Just enter your name &amp; email to secure your spot on this free
+                        workshop...</p>
+                </div>
+
+                <form id="ss-form" novalidate class="ss-form">
+                    <div>
+                        <label for="ss-name" class="ss-label">Name</label>
+                        <input type="text" id="ss-name" name="fname" placeholder="John Doe"
+                            class="ss-input hyros-first-name" />
+                        <span class="ss-field-error" data-for="ss-name" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="ss-email" class="ss-label">Email</label>
+                        <input type="email" id="ss-email" placeholder="you@example.com" required aria-required="true"
+                            class="ss-input" />
+                        <span class="ss-field-error" data-for="ss-email" role="alert"></span>
+                    </div>
+                    <div id="ss-sms-wrap" style="display:none">
+                        <label class="ss-label">Enter your mobile number to receive a text reminder when the
+                            workshop is starting</label>
+                        <div class="ss-phone-row">
+                            <div class="ss-phone-code-wrap">
+                                <select id="ss-country-code" class="ss-select ss-phone-code">
+                                    <option value="+1" data-flag="🇺🇸" selected>🇺🇸 +1</option>
+                                    <option value="+44" data-flag="🇬🇧">🇬🇧 +44</option>
+                                    <option value="+61" data-flag="🇦🇺">🇦🇺 +61</option>
+                                    <option value="+91" data-flag="🇮🇳">🇮🇳 +91</option>
+                                    <option value="+49" data-flag="🇩🇪">🇩🇪 +49</option>
+                                    <option value="+33" data-flag="🇫🇷">🇫🇷 +33</option>
+                                    <option value="+34" data-flag="🇪🇸">🇪🇸 +34</option>
+                                    <option value="+39" data-flag="🇮🇹">🇮🇹 +39</option>
+                                    <option value="+55" data-flag="🇧🇷">🇧🇷 +55</option>
+                                    <option value="+52" data-flag="🇲🇽">🇲🇽 +52</option>
+                                    <option value="+81" data-flag="🇯🇵">🇯🇵 +81</option>
+                                    <option value="+82" data-flag="🇰🇷">🇰🇷 +82</option>
+                                    <option value="+86" data-flag="🇨🇳">🇨🇳 +86</option>
+                                    <option value="+64" data-flag="🇳🇿">🇳🇿 +64</option>
+                                    <option value="+27" data-flag="🇿🇦">🇿🇦 +27</option>
+                                    <option value="+971" data-flag="🇦🇪">🇦🇪 +971</option>
+                                    <option value="+65" data-flag="🇸🇬">🇸🇬 +65</option>
+                                    <option value="+63" data-flag="🇵🇭">🇵🇭 +63</option>
+                                    <option value="+234" data-flag="🇳🇬">🇳🇬 +234</option>
+                                    <option value="+254" data-flag="🇰🇪">🇰🇪 +254</option>
+                                </select>
+                            </div>
+                            <input type="tel" id="ss-sms" name="hyros-phone" placeholder="(555) 123-4567"
+                                class="ss-input ss-phone-input hyros-phone" />
+                        </div>
+                        <p class="ss-sms-hint">Enter your mobile number to receive a text reminder when the webinar
+                            is starting</p>
+                        <span class="ss-field-error" data-for="ss-sms" role="alert"></span>
+                    </div>
+                    <div>
+                        <label for="ss-time" class="ss-label">Pick a time</label>
+                        <div class="ss-sel-wrap">
+                            <select id="ss-time" required aria-required="true" class="ss-select">
+                                <option value="">Select a Time...</option>
+                            </select>
+                            <svg class="ss-sel-chev" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <span class="ss-field-error" data-for="ss-time" role="alert"></span>
+                    </div>
+                    <div id="ss-gdpr-wrap" style="display:none">
+                        <label class="ss-cb-row">
+                            <input type="checkbox" id="ss-gdpr" class="ss-cb" />
+                            <span id="ss-gdpr-text" class="ss-cb-label"></span>
+                        </label>
+                        <span class="ss-field-error" data-for="ss-gdpr" role="alert"></span>
+                    </div>
+                    <div id="ss-custom-checks"></div>
+                    <button type="submit" id="ss-submit-btn" class="ss-submit">
+                        <span id="ss-btn-text">Reserve my spot</span>
+                        <svg id="ss-btn-spinner" class="ss-hidden ss-spin" fill="none" viewBox="0 0 24 24">
+                            <circle opacity=".25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                            <path opacity=".75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                    </button>
+                    <p id="ss-message" style="display:none" role="alert" aria-live="polite" class="ss-msg"></p>
+                </form>
+                <p class="ss-footer">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 10-8 0v4h8z" />
+                    </svg>
+                    We will not spam, rent, or sell your information...
+                </p>
+                <p class="ss-urgency">Act Fast - Workshop Spots Fill Up</p>
+            </div>
+
+            <!-- SUCCESS -->
+            <div id="ss-success" style="display:none" class="ss-ok-wrap">
+                <div class="ss-ok-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg></div>
+                <h2 class="ss-ok-title">You're Registered!</h2>
+                <p class="ss-ok-sub">Check your email for webinar details and reminders.</p>
+                <p id="ss-success-time" class="ss-ok-time"></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                      -->
+<!-- ════════════════════════════════════════════════ -->
+<script>
+    (function () {
+        "use strict";
+
+        var CONFIG = {
+            shortId: "s31rYb",
+            apiBase: "https://api.joinnow.live/webinars/",
+            requestTimeout: 10000,
+            maxRetries: 3,
+            retryBaseDelay: 1000,
+            duplicateSubmitWindow: 5000,
+            thankYouRedirect: null,
+            joinUrl: null,
+            smsEnabled: false,
+            smsRequired: false,
+            yesterdaysNow: false,
+            customFields: [],
+            registrationPageId: null,
+            submitLabel: "Reserve my spot",
+            duration: 0
+        };
+
+        // ══════════════════════════════════════════
+        // PHONE FORMAT RULES PER COUNTRY CODE
+        // ══════════════════════════════════════════
+        // maxDigits: max number of local digits (after stripping leading 0)
+        // stripZero: true if users commonly prefix with 0 (e.g. UK 07xxx, AU 04xx)
+        // format(d): takes raw digit string, returns formatted display string
+        // placeholder: example shown in the input field
+        var PHONE_FORMATS = {
+            "+1": {
+                maxDigits: 10,
+                stripZero: false,
+                placeholder: "(555) 123-4567",
+                format: function (d) {
+                    if (d.length <= 3) return "(" + d;
+                    if (d.length <= 6) return "(" + d.slice(0, 3) + ") " + d.slice(3);
+                    return "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6, 10);
+                }
+            },
+            "+44": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "7911 123456",
+                format: function (d) {
+                    if (d.length <= 4) return d;
+                    return d.slice(0, 4) + " " + d.slice(4, 10);
+                }
+            },
+            "+61": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "412 345 678",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 6) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6, 9);
+                }
+            },
+            "+91": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "98765 43210",
+                format: function (d) {
+                    if (d.length <= 5) return d;
+                    return d.slice(0, 5) + " " + d.slice(5, 10);
+                }
+            },
+            "+49": {
+                maxDigits: 11,
+                stripZero: true,
+                placeholder: "170 1234567",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    return d.slice(0, 3) + " " + d.slice(3, 11);
+                }
+            },
+            "+33": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "6 12 34 56 78",
+                format: function (d) {
+                    var parts = [];
+                    for (var i = 0; i < d.length; i += 2) {
+                        if (i === 0) { parts.push(d.slice(0, 1)); i = 1; continue; }
+                        parts.push(d.slice(i, i + 2));
+                    }
+                    // Simpler: 6 12 34 56 78
+                    if (d.length <= 1) return d;
+                    var out = d[0];
+                    for (var j = 1; j < d.length; j += 2) {
+                        out += " " + d.slice(j, j + 2);
+                    }
+                    return out;
+                }
+            },
+            "+34": {
+                maxDigits: 9,
+                stripZero: false,
+                placeholder: "612 345 678",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 6) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6, 9);
+                }
+            },
+            "+39": {
+                maxDigits: 10,
+                stripZero: false,
+                placeholder: "312 345 6789",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 6) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+55": {
+                maxDigits: 11,
+                stripZero: false,
+                placeholder: "(11) 98765-4321",
+                format: function (d) {
+                    if (d.length <= 2) return "(" + d;
+                    if (d.length <= 7) return "(" + d.slice(0, 2) + ") " + d.slice(2);
+                    return "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7, 11);
+                }
+            },
+            "+52": {
+                maxDigits: 10,
+                stripZero: false,
+                placeholder: "55 1234 5678",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 6) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+81": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "90 1234 5678",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 6) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+82": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "10 1234 5678",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 6) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+86": {
+                maxDigits: 11,
+                stripZero: false,
+                placeholder: "138 1234 5678",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 7) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 7) + " " + d.slice(7, 11);
+                }
+            },
+            "+64": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "21 123 4567",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 5) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 5) + " " + d.slice(5, 9);
+                }
+            },
+            "+27": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "71 123 4567",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 5) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 5) + " " + d.slice(5, 9);
+                }
+            },
+            "+971": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "50 123 4567",
+                format: function (d) {
+                    if (d.length <= 2) return d;
+                    if (d.length <= 5) return d.slice(0, 2) + " " + d.slice(2);
+                    return d.slice(0, 2) + " " + d.slice(2, 5) + " " + d.slice(5, 9);
+                }
+            },
+            "+65": {
+                maxDigits: 8,
+                stripZero: false,
+                placeholder: "9123 4567",
+                format: function (d) {
+                    if (d.length <= 4) return d;
+                    return d.slice(0, 4) + " " + d.slice(4, 8);
+                }
+            },
+            "+63": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "917 123 4567",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 6) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+234": {
+                maxDigits: 10,
+                stripZero: true,
+                placeholder: "801 234 5678",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    if (d.length <= 6) return d.slice(0, 3) + " " + d.slice(3);
+                    return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6, 10);
+                }
+            },
+            "+254": {
+                maxDigits: 9,
+                stripZero: true,
+                placeholder: "712 345678",
+                format: function (d) {
+                    if (d.length <= 3) return d;
+                    return d.slice(0, 3) + " " + d.slice(3, 9);
+                }
+            }
+        };
+
+        // Default format for unlisted country codes
+        var DEFAULT_PHONE_FORMAT = {
+            maxDigits: 12,
+            stripZero: false,
+            placeholder: "Enter your phone number",
+            format: function (d) {
+                // Generic: groups of 3-4
+                if (d.length <= 4) return d;
+                if (d.length <= 7) return d.slice(0, 3) + " " + d.slice(3);
+                return d.slice(0, 3) + " " + d.slice(3, 6) + " " + d.slice(6);
+            }
+        };
+
+        function getPhoneFormat(code) {
+            return PHONE_FORMATS[code] || DEFAULT_PHONE_FORMAT;
+        }
+
+        // Extract raw digits from formatted display value
+        function extractDigits(str) {
+            return str.replace(/[^\d]/g, "");
+        }
+
+        // Core formatting function: takes raw input, returns { display, digits }
+        function formatPhoneValue(rawInput, countryCode) {
+            var fmt = getPhoneFormat(countryCode);
+            var digits = extractDigits(rawInput);
+
+            // Strip leading zero(s) for countries that use trunk prefix
+            if (fmt.stripZero) {
+                digits = digits.replace(/^0+/, "");
+            }
+
+            // Enforce max digit length
+            if (digits.length > fmt.maxDigits) {
+                digits = digits.slice(0, fmt.maxDigits);
+            }
+
+            return {
+                display: digits.length ? fmt.format(digits) : "",
+                digits: digits
+            };
+        }
+
+        // DOM — scoped
+        var root = null;
+        try { var cs = document.currentScript; if (cs && cs.previousElementSibling) { var prev = cs.previousElementSibling; if (prev.id === "ss-registration-form") root = prev; } } catch (e) { }
+        if (!root) { var all = document.querySelectorAll("#ss-registration-form"); root = all.length ? all[all.length - 1] : null; }
+        if (!root) { console.error("SS Widget: container not found."); return; }
+
+        var $ = function (id) { return root.querySelector("#" + id); };
+        var loader = $("ss-loader"), loadError = $("ss-load-error"), loadErrorMsg = $("ss-load-error-msg"), retryBtn = $("ss-retry-btn");
+        var formWrap = $("ss-form-wrap"), form = $("ss-form"), timeSelect = $("ss-time");
+        var msgEl = $("ss-message"), submitBtn = $("ss-submit-btn"), btnText = $("ss-btn-text"), btnSpinner = $("ss-btn-spinner");
+        var gdprWrap = $("ss-gdpr-wrap"), gdprCheckbox = $("ss-gdpr"), gdprText = $("ss-gdpr-text");
+        var smsWrap = $("ss-sms-wrap"), smsInput = $("ss-sms"), customChecks = $("ss-custom-checks");
+        var successEl = $("ss-success"), successTime = $("ss-success-time");
+        var cdCountdown = $("cd-countdown"), cdLiveBanner = $("cd-live-banner");
+        var cdDays = $("cd-days"), cdHours = $("cd-hours"), cdMins = $("cd-mins"), cdSecs = $("cd-secs"), cdJoinLink = $("cd-join-link");
+        var countryCode = $("ss-country-code");
+        var lastSubmitTime = 0, tickInterval = null, didSucceed = false;
+
+        // ══════════════════════════════════════════
+        // PHONE INPUT FORMATTING LOGIC
+        // ══════════════════════════════════════════
+        function updatePhonePlaceholder() {
+            var fmt = getPhoneFormat(countryCode.value);
+            smsInput.placeholder = fmt.placeholder;
+        }
+
+        function applyPhoneFormatting() {
+            var result = formatPhoneValue(smsInput.value, countryCode.value);
+            smsInput.value = result.display;
+        }
+
+        // Format on every keystroke
+        smsInput.addEventListener("input", function () {
+            // Save cursor position relative to digits before formatting
+            var cursorPos = smsInput.selectionStart;
+            var beforeCursor = smsInput.value.slice(0, cursorPos);
+            var digitsBeforeCursor = extractDigits(beforeCursor).length;
+
+            applyPhoneFormatting();
+
+            // Restore cursor to the right position after formatting
+            var newVal = smsInput.value;
+            var digitsSeen = 0;
+            var newCursor = newVal.length;
+            for (var i = 0; i < newVal.length; i++) {
+                if (/\d/.test(newVal[i])) {
+                    digitsSeen++;
+                    if (digitsSeen === digitsBeforeCursor) {
+                        newCursor = i + 1;
+                        break;
+                    }
+                }
+            }
+            smsInput.setSelectionRange(newCursor, newCursor);
+        });
+
+        // Re-format when pasting
+        smsInput.addEventListener("paste", function () {
+            setTimeout(function () { applyPhoneFormatting(); }, 0);
+        });
+
+        // When country code changes: update placeholder + re-format existing value
+        countryCode.addEventListener("change", function () {
+            updatePhonePlaceholder();
+            if (smsInput.value) applyPhoneFormatting();
+        });
+
+        // Initialize placeholder
+        updatePhonePlaceholder();
+
+        // Helper to get clean digits for API submission
+        function getCleanPhoneDigits() {
+            return extractDigits(smsInput.value);
+        }
+
+        // Fetch
+        function fetchWithTimeout(url, opts, timeout) {
+            opts = opts || {}; timeout = timeout || CONFIG.requestTimeout;
+            var ctrl = new AbortController(); var t = setTimeout(function () { ctrl.abort(); }, timeout);
+            return fetch(url, Object.assign({}, opts, { signal: ctrl.signal })).then(function (r) { clearTimeout(t); return r; }).catch(function (e) { clearTimeout(t); throw e; });
+        }
+        function fetchWithRetry(url, opts, retries) {
+            opts = opts || {}; retries = retries != null ? retries : CONFIG.maxRetries;
+            return (function attempt(i) {
+                return fetchWithTimeout(url, opts).then(function (res) {
+                    if (res.ok) return res;
+                    if (res.status >= 400 && res.status < 500) {
+                        return res.json().catch(function () { return {}; }).then(function (b) { var e = new Error(b.message || "Request failed"); e.status = res.status; e.body = b; e._classified = true; throw e; });
+                    }
+                    if (i < retries) return wait(CONFIG.retryBaseDelay * Math.pow(2, i)).then(function () { return attempt(i + 1); });
+                    var se = new Error("Server error (HTTP " + res.status + "). Try again later."); se._classified = true; throw se;
+                }).catch(function (err) {
+                    if (err._classified) throw err;
+                    if (i < retries) return wait(CONFIG.retryBaseDelay * Math.pow(2, i)).then(function () { return attempt(i + 1); });
+                    if (err.name === "AbortError") throw new Error("Request timed out. Check your connection and try again.");
+                    throw new Error("Network error. Check your connection and try again.");
+                });
+            })(0);
+        }
+        function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+        // Validation
+        function clearFieldErrors() { root.querySelectorAll(".ss-field-error").forEach(function (e) { e.textContent = ""; }); }
+        function setFieldError(id, msg) { var el = root.querySelector('.ss-field-error[data-for="' + id + '"]'); if (el) el.textContent = msg; }
+        function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+        function validatePhone(v) {
+            var digits = extractDigits(v);
+            var fmt = getPhoneFormat(countryCode.value);
+            // Must have at least 5 digits and not exceed max
+            if (digits.length < 5) return false;
+            // For countries with known lengths, check exact or close
+            if (fmt.maxDigits <= 11 && digits.length < fmt.maxDigits - 1) return false;
+            return true;
+        }
+        function validateForm() {
+            clearFieldErrors(); var ok = true; var email = $("ss-email").value.trim();
+            if (!email) { setFieldError("ss-email", "Email is required."); ok = false; }
+            else if (!validateEmail(email)) { setFieldError("ss-email", "Enter a valid email."); ok = false; }
+            if (!timeSelect.value) { setFieldError("ss-time", "Please select a session."); ok = false; }
+            if (smsWrap.style.display !== "none" && CONFIG.smsRequired) {
+                var phoneDigits = getCleanPhoneDigits();
+                var fmt = getPhoneFormat(countryCode.value);
+                if (!phoneDigits || phoneDigits.length < 5) {
+                    setFieldError("ss-sms", "Please enter your phone number."); ok = false;
+                } else if (phoneDigits.length < fmt.maxDigits - 1) {
+                    setFieldError("ss-sms", "Number looks too short. Expected " + fmt.maxDigits + " digits (e.g. " + fmt.placeholder + ")."); ok = false;
+                }
+            }
+            if (gdprWrap.style.display !== "none" && !gdprCheckbox.checked) { setFieldError("ss-gdpr", "Consent is required."); ok = false; }
+            CONFIG.customFields.forEach(function (field) {
+                if (field.required) { var any = field.options.some(function (opt) { var cb = $(opt.id); return cb && cb.checked; }); if (!any) { setFieldError(field.options[0].id, "This field is required."); ok = false; } }
+            });
+            return ok;
+        }
+
+        // UI
+        function triggerFadeIn(el) { el.classList.remove("ss-fade-in"); void el.offsetWidth; el.classList.add("ss-fade-in"); }
+        function showView(v) {
+            loader.style.display = v === "loading" ? "block" : "none"; loadError.style.display = v === "error" ? "block" : "none";
+            formWrap.style.display = v === "form" ? "block" : "none"; successEl.style.display = v === "success" ? "block" : "none";
+            if (v === "error") triggerFadeIn(loadError); if (v === "form") triggerFadeIn(formWrap); if (v === "success") triggerFadeIn(successEl);
+        }
+        function showMsg(txt, err) { msgEl.textContent = txt; msgEl.style.display = "block"; msgEl.className = err ? "ss-msg ss-msg--err" : "ss-msg ss-msg--ok"; }
+        function hideMsg() { msgEl.style.display = "none"; }
+        function setLoading(on) { submitBtn.disabled = on; btnText.textContent = on ? "Reserving..." : CONFIG.submitLabel; btnSpinner.classList.toggle("ss-hidden", !on); }
+        function pad(n) { return String(n).padStart(2, "0"); }
+        function slugify(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+        function sanitizeUrl(url) { if (!url) return "#"; try { var p = new URL(url); if (p.protocol === "https:" || p.protocol === "http:") return url; } catch (e) { } return "#"; }
+        function fmtTime(iso) { try { var d = new Date(iso); var tz = Intl.DateTimeFormat().resolvedOptions().timeZone; var datePart = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }); var timePart = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true }); var tzAbbr = new Date().toLocaleTimeString("en-US", { timeZone: tz, timeZoneName: "short" }).split(" ").pop(); return datePart + " @ " + timePart + " " + tzAbbr; } catch (_) { return iso; } }
+        function fmtDateLong(iso) { try { var d = new Date(iso); var tz = Intl.DateTimeFormat().resolvedOptions().timeZone; var tzAbbr = new Date().toLocaleTimeString("en-US", { timeZone: tz, timeZoneName: "short" }).split(" ").pop(); return d.toLocaleString(undefined, { weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }) + " " + tzAbbr; } catch (_) { return iso; } }
+        function resetFormInputs() { $("ss-name").value = ""; $("ss-email").value = ""; smsInput.value = ""; countryCode.selectedIndex = 0; updatePhonePlaceholder(); gdprCheckbox.checked = false; timeSelect.selectedIndex = 0; hideMsg(); clearFieldErrors(); }
+
+        // Countdown
+        function stopCountdown() { if (tickInterval) { clearInterval(tickInterval); tickInterval = null; } cdCountdown.style.display = "none"; cdLiveBanner.style.display = "none"; }
+        function startCountdown(isoTime) {
+            stopCountdown(); var target = new Date(isoTime).getTime(); if (isNaN(target)) return;
+            cdJoinLink.href = sanitizeUrl(CONFIG.joinUrl || ("https://joinnow.live/s/" + CONFIG.shortId));
+            var now = Date.now(), endTime = target + (CONFIG.duration * 1000);
+            if (target <= now && endTime <= now) return;
+            // if (target <= now) { cdLiveBanner.style.display = "block"; return; }
+            cdCountdown.style.display = "block";
+            function tick() {
+                var diff = Math.max(0, target - Date.now());
+                if (diff <= 0) {
+                    clearInterval(tickInterval); tickInterval = null;
+                    // cdCountdown.style.display = "none"; cdLiveBanner.style.display = "block"; 
+                    cdDays.textContent = "00"; cdHours.textContent = "00"; cdMins.textContent = "00"; cdSecs.textContent = "00";
+                    return;
+                }
+                var s = Math.floor(diff / 1000); cdDays.textContent = pad(Math.floor(s / 86400)); cdHours.textContent = pad(Math.floor((s % 86400) / 3600));
+                cdMins.textContent = pad(Math.floor((s % 3600) / 60)); cdSecs.textContent = pad(s % 60);
+            }
+            tick(); tickInterval = setInterval(tick, 1000);
+        }
+        function onTimeSelectChange() { var val = timeSelect.value; if (!val || val === "yesterdays_now") { stopCountdown(); return; } startCountdown(val); }
+
+        // Custom fields
+        function buildCustomFields(schema) {
+            if (!schema || !schema.fields) return;
+            schema.fields.forEach(function (field) {
+                if (field.type === "Checkboxes" && field.custom && !field.disabled && field.options) {
+                    var slug = slugify(field.name);
+                    var fieldDef = { name: field.name, required: !!field.required, options: field.options.map(function (opt, idx) { return { id: "ss-custom-" + slug + "-" + idx, value: opt.value }; }) };
+                    CONFIG.customFields.push(fieldDef);
+                    field.options.forEach(function (opt, idx) {
+                        var cbId = "ss-custom-" + slug + "-" + idx; var w = document.createElement("div");
+                        var lbl = document.createElement("label"); lbl.className = "ss-cb-row";
+                        var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = cbId; cb.className = "ss-cb";
+                        var sp = document.createElement("span"); sp.className = "ss-cb-label"; sp.textContent = opt.label;
+                        lbl.appendChild(cb); lbl.appendChild(sp); w.appendChild(lbl);
+                        var err = document.createElement("span"); err.className = "ss-field-error"; err.setAttribute("data-for", cbId); err.setAttribute("role", "alert");
+                        w.appendChild(err); customChecks.appendChild(w);
+                    });
+                }
+                if (field.type === "SmsNumber" && !field.disabled) {
+                    CONFIG.smsEnabled = true; CONFIG.smsRequired = !!field.required; smsWrap.style.display = "block";
+                    if (CONFIG.smsRequired) smsInput.setAttribute("aria-required", "true");
+                }
+            });
+        }
+
+        // Load
+        function loadWebinarInfo() {
+            stopCountdown(); showView("loading"); didSucceed = false;
+            fetchWithRetry(CONFIG.apiBase + CONFIG.shortId + "/registration-information?timezone=" + encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone))
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (!data.registration_enabled) {
+                        retryBtn.style.display = "none";
+                        loadErrorMsg.textContent = "Registration is currently closed. Already registered? ";
+                        if (data.domain) {
+                            var a = document.createElement("a"); a.href = sanitizeUrl("https://" + data.domain + "/s/" + CONFIG.shortId + "/login");
+                            a.style.cssText = "color:var(--brand-600);text-decoration:underline"; a.textContent = "Log in here";
+                            loadErrorMsg.appendChild(a); loadErrorMsg.appendChild(document.createTextNode("."));
+                        }
+                        showView("error"); return;
+                    }
+                    if (!data.upcoming_times || !data.upcoming_times.length) {
+                        loadErrorMsg.textContent = "No upcoming sessions available. Check back later."; retryBtn.style.display = "inline-flex"; showView("error"); return;
+                    }
+                    CONFIG.yesterdaysNow = !!data.yesterdays_now; CONFIG.duration = data.duration || 0;
+                    if (data.thankYouRedirect) CONFIG.thankYouRedirect = data.thankYouRedirect;
+                    if (data.domain) CONFIG.joinUrl = "https://" + data.domain + "/s/" + CONFIG.shortId;
+
+                    timeSelect.innerHTML = '<option value="">Select a Time...</option>';
+                    data.upcoming_times.forEach(function (t) { var o = document.createElement("option"); o.value = t; o.textContent = fmtTime(t); timeSelect.appendChild(o); });
+
+                    if (CONFIG.yesterdaysNow) {
+                        var wynOpt = document.createElement("option"); wynOpt.value = "yesterdays_now";
+                        wynOpt.textContent = (data.registration_strings && data.registration_strings.wywnOptionText) ? data.registration_strings.wywnOptionText : "Watch Yesterday's Webinar Now";
+                        timeSelect.appendChild(wynOpt);
+                    }
+
+                    if (data.gdpr && data.gdpr.consent_text) { gdprWrap.style.display = "block"; gdprText.textContent = data.gdpr.consent_text; }
+                    else { gdprWrap.style.display = "none"; }
+
+                    CONFIG.smsEnabled = false; CONFIG.smsRequired = false; CONFIG.customFields = [];
+                    smsWrap.style.display = "none"; smsInput.removeAttribute("aria-required"); customChecks.innerHTML = "";
+                    buildCustomFields(data.registration_schema);
+
+                    CONFIG.registrationPageId = null;
+                    if (data.registrationPages && data.registrationPages.length) {
+                        var ap = data.registrationPages.find(function (p) { return p.active && !p.deleted_at; });
+                        CONFIG.registrationPageId = ap ? ap.id : data.registrationPages[0].id;
+                    }
+
+                    resetFormInputs(); btnText.textContent = CONFIG.submitLabel; showView("form");
+
+                    var now = Date.now();
+                    var nearest = data.upcoming_times.filter(function (t) { return new Date(t).getTime() > now; }).sort(function (a, b) { return new Date(a) - new Date(b); })[0];
+                    if (nearest) { timeSelect.value = nearest; startCountdown(nearest); }
+                })
+                .catch(function (err) {
+                    console.error("SS Load Error:", err); loadErrorMsg.textContent = err.message || "Failed to load webinar details.";
+                    retryBtn.style.display = "inline-flex"; showView("error");
+                });
+        }
+
+        // Register
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); hideMsg(); didSucceed = false;
+            if (Date.now() - lastSubmitTime < CONFIG.duplicateSubmitWindow) { showMsg("Please wait a moment before trying again.", true); return; }
+            if (!validateForm()) return;
+
+            var name = $("ss-name").value.trim(), email = $("ss-email").value.trim(), time = timeSelect.value;
+            var isYN = (time === "yesterdays_now");
+
+            if (!isYN && time && new Date(time).getTime() < Date.now()) {
+                showMsg("This event is no longer available. Please refresh the page and choose another event.", true);
+                return;
+            }
+
+            var params = new URLSearchParams(window.location.search); var lp = {};
+            ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "v1", "v2", "v3", "v4", "v5"].forEach(function (k) { if (params.get(k)) lp[k] = params.get(k); });
+
+            var body = { email: email, name: name || undefined, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null, gdprConsentReceived: gdprCheckbox.checked, linkParams: Object.keys(lp).length ? lp : undefined };
+            if (isYN) {
+                body.yesterdays_now = true;
+                body.start_time = timeSelect.querySelector('option[value]:not([value=""]):not([value="yesterdays_now"])').value;
+            } else {
+                body.start_time = time;
+            }
+            if (CONFIG.smsEnabled) {
+                var phoneDigits = getCleanPhoneDigits();
+                if (phoneDigits) body.sms_number = countryCode.value + phoneDigits;
+            }
+            if (CONFIG.registrationPageId) body.registration_page_id = CONFIG.registrationPageId;
+            if (CONFIG.customFields.length) {
+                var cf = {}; CONFIG.customFields.forEach(function (field) { var checked = []; field.options.forEach(function (opt) { var cb = $(opt.id); if (cb && cb.checked) checked.push(opt.value); }); if (checked.length) cf[field.name] = checked.length === 1 ? checked[0] : checked; });
+                if (Object.keys(cf).length) body.customFields = cf;
+            }
+
+            setLoading(true); lastSubmitTime = Date.now();
+            fetchWithRetry(CONFIG.apiBase + CONFIG.shortId + "/registration", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+                .then(function (res) { return res.json(); })
+                .then(function (result) {
+                    didSucceed = true; stopCountdown();
+
+                    var attendeeId = result.attendee && result.attendee.short_id;
+
+                    if (CONFIG.joinUrl && attendeeId) {
+                        var baseUrl = CONFIG.joinUrl.replace(/\/s\/[^/]+$/, "");
+
+                        if (isYN) {
+                            // YESTERDAY'S WEBINAR (Replay)
+                            // Uses /r/, the specific event instance ID, and adds &registered=true
+                            var instanceId = result.short_id;
+                            window.location.href = baseUrl + "/r/" + instanceId + "?id=" + attendeeId + "&registered=true";
+                        } else {
+                            // FUTURE/ACTIVE WEBINARS (5-min, 6 PM)
+                            // Kept exactly as you originally had it! Uses /t/ and the main webinar ID
+                            window.location.href = baseUrl + "/t/" + CONFIG.shortId + "?id=" + attendeeId;
+                        }
+                        return;
+                    }
+
+                    // Fallback if response didn't include expected fields
+                    successTime.textContent = isYN ? "Watch now — check your email!" : "Your session: " + fmtTime(time);
+                    showView("success");
+                    if (CONFIG.thankYouRedirect) {
+                        setTimeout(function () { window.location.href = CONFIG.thankYouRedirect; }, 2000);
+                    }
+                })
+                .catch(function (err) {
+                    console.error("SS Reg Error:", err);
+                    var map = { 400: "Invalid information. Please double-check and try again.", 404: "This webinar could not be found.", 409: "You are already registered for this session.", 422: "Please check your information and try again.", 429: "Too many requests — please wait a moment." };
+                    showMsg(map[err.status] || err.message || "Registration failed. Please try again.", true);
+                })
+                .then(function () { if (!didSucceed) setLoading(false); });
+        });
+
+        timeSelect.addEventListener("change", onTimeSelectChange);
+        retryBtn.addEventListener("click", loadWebinarInfo);
+        loadWebinarInfo();
+    })();
+</script>
